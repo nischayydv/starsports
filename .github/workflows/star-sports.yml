@@ -14,77 +14,43 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Install jq
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y jq
+        run: sudo apt-get update && sudo apt-get install -y jq
 
       - name: Fetch source data
         run: |
-          mkdir -p data output
-          curl -s https://allinonereborn.online/jtv-fetch/jstr4web.json -o data/channels.json
-          curl -s https://allinonereborn.online/jtv-fetch/jstarcookie/cookie.json -o data/cookies.json
+          curl -s https://allinonereborn.online/jtv-fetch/jstr4web.json -o channels.json
+          curl -s https://allinonereborn.online/jtv-fetch/jstarcookie/cookie.json -o cookies.json
 
       - name: Generate Star Sports JSON
         run: |
+          mkdir -p output
+
           jq -s '
-
-          def map_id($name):
-            if $name == "Star Sports 1 Hindi HD" then "ss1h"
-            elif $name == "Star Sports 1 HD" then "ss1"
-            elif $name == "Star Sports 1" then "ss1sd"
-            elif $name == "Star Sports 1 Tamil HD" then "ss1tamhd"
-            elif $name == "Star Sports 1 Tamil" then "ss1tam"
-            elif $name == "Star Sports 1 Telugu HD" then "ss1telhd"
-            elif $name == "Star Sports 1 Telugu" then "ss1tel"
-            elif $name == "Star Sports 1 Kannada" then "ss1kan"
-
-            elif $name == "Star Sports 2 Hindi HD" then "ss2h"
-            elif $name == "Star Sports 2 Hindi" then "ss2hin"
-            elif $name == "Star Sports 2 HD" then "ss2"
-            elif $name == "Star Sports 2" then "ss2sd"
-
-            elif $name == "Star Sports 2 Tamil HD" then "ss2tamhd"
-            elif $name == "Star Sports 2 Tamil" then "ss2tam"
-
-            elif $name == "Star Sports 2 Telugu HD" then "ss2telhd"
-            elif $name == "Star Sports 2 Telugu" then "ss2tel"
-
-            elif $name == "Star Sports 2 Kannada" then "ss2kan"
-
-            elif $name == "Star Sports 3" then "ss3"
-
-            elif $name == "Star Sports Select 1 HD" then "sss1h"
-            elif $name == "Star Sports Select 1" then "sss1"
-
-            elif $name == "Star Sports Select 2 HD" then "sss2h"
-            elif $name == "Star Sports Select 2" then "sss2"
-            else null
-            end;
-
-          def get_cookie($name; cookies):
-            (cookies[0].failed_results[]
-              | select(.channel_name == $name)
-              | .error_details.final_url
-              | split("?")[1]
-            );
-
-          .[0] as $channels
-          | .[1] as $cookies
-          | $channels
-          | map(
-              select(.name | test("Star Sports"))
-              | select(map_id(.name) != null)
+          .[0].failed_results as $failed
+          | .[1] as $channels
+          | [
+              $failed[]
+              | select(.channel_name | test("Star Sports"))
               | {
-                  id: map_id(.name),
-                  name: .name,
-                  url: (.url | split("?")[0]),
-                  cookie: ("__hdnea__=" + get_cookie(.name; $cookies)),
-                  keyId: .keyId,
-                  key: .key,
-                  logo: .logo
+                  cid: .channel_id,
+                  cookie: (.error_details.final_url | split("?")[1])
+                } as $c
+
+              | ($channels[]
+                | select(.id == $c.cid)
+              ) as $ch
+
+              | {
+                  id: $ch.id,
+                  name: $ch.name,
+                  url: ($ch.url | split("?")[0]),
+                  cookie: $c.cookie,
+                  keyId: $ch.keyId,
+                  key: $ch.key,
+                  logo: $ch.logo
                 }
-            )
-          ' data/channels.json data/cookies.json > output/star_sports.json
+            ]
+          ' cookies.json channels.json > output/star_sports.json
 
       - name: Commit & push output
         run: |
