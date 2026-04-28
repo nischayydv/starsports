@@ -1,47 +1,81 @@
-name: Build Star Sports JSON
+name: Generate Star Sports JSON (Custom IDs)
 
 on:
+  workflow_dispatch:
   schedule:
     - cron: "*/30 * * * *"
-  workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: Checkout repo
         uses: actions/checkout@v4
 
       - name: Install jq
-        run: sudo apt-get update && sudo apt-get install -y jq
+        run: sudo apt-get install -y jq
 
-      - name: Fetch source data
+      - name: Fetch JSON files
         run: |
           curl -s https://allinonereborn.online/jtv-fetch/jstr4web.json -o channels.json
           curl -s https://allinonereborn.online/jtv-fetch/jstarcookie/cookie.json -o cookies.json
 
-      - name: Generate Star Sports JSON
+      - name: Generate Star Sports JSON (with custom IDs)
         run: |
           mkdir -p output
 
           jq -s '
+          def map_id(name):
+            if name == "Star Sports 1 Hindi HD" then "ss1h"
+            elif name == "Star Sports 1 HD" then "ss1"
+            elif name == "Star Sports 1" then "ss1sd"
+            elif name == "Star Sports 1 Tamil HD" then "ss1tam"
+            elif name == "Star Sports 1 Tamil" then "ss1tam"
+            elif name == "Star Sports 1 Telugu HD" then "ss1telhd"
+            elif name == "Star Sports 1 Telugu" then "ss1tel"
+            elif name == "Star Sports 1 Kannada" then "ss1kan"
+            elif name == "Star Sports 2 Hindi HD" then "ss2h"
+            elif name == "Star Sports 2 Hindi" then "ss2hin"
+            elif name == "Star Sports 2 HD" then "ss2"
+            elif name == "Star Sports 2" then "ss2sd"
+            elif name == "Star Sports 2 Tamil HD" then "ss2tamhd"
+            elif name == "Star Sports 2 Tamil" then "ss2tam"
+            elif name == "Star Sports 2 Telugu HD" then "ss2telhd"
+            elif name == "Star Sports 2 Telugu" then "ss2tel"
+            elif name == "Star Sports 2 Kannada" then "ss2kan"
+            elif name == "Star Sports 3" then "ss3"
+            elif name == "Star Sports Select 1 HD" then "sss1h"
+            elif name == "Star Sports Select 1" then "sss1"
+            elif name == "Star Sports Select 2 HD" then "sss2h"
+            elif name == "Star Sports Select 2" then "sss2"
+            else null
+            end;
+
+          def get_cookie($id):
+            ($[1].failed_results[]? 
+              | select(.channel_id == $id)
+              | .error_details.final_url
+            )
+            | split("?")[1];
+
           .[0].failed_results as $failed
           | .[1] as $channels
           | [
               $failed[]
               | select(.channel_name | test("Star Sports"))
               | {
+                  cname: .channel_name,
                   cid: .channel_id,
                   cookie: (.error_details.final_url | split("?")[1])
                 } as $c
 
               | ($channels[]
-                | select(.id == $c.cid)
+                | select(.name == $c.cname)
               ) as $ch
 
               | {
-                  id: $ch.id,
+                  id: (map_id($ch.name) // $ch.id),
                   name: $ch.name,
                   url: ($ch.url | split("?")[0]),
                   cookie: $c.cookie,
@@ -52,11 +86,10 @@ jobs:
             ]
           ' cookies.json channels.json > output/star_sports.json
 
-      - name: Commit & push output
+      - name: Commit & Push
         run: |
-          git config user.name "github-actions"
-          git config user.email "actions@github.com"
-
+          git config --global user.name "github-actions"
+          git config --global user.email "actions@github.com"
           git add output/star_sports.json
-          git commit -m "Update Star Sports JSON" || echo "No changes"
+          git commit -m "Updated Star Sports JSON (custom IDs)" || echo "No changes"
           git push
