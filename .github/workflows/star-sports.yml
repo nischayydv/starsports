@@ -13,83 +13,87 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Install jq
-        run: sudo apt-get update && sudo apt-get install -y jq
-
       - name: Fetch source data
         run: |
           curl -s https://allinonereborn.online/jtv-fetch/jstr4web.json -o channels.json
           curl -s https://allinonereborn.online/jtv-fetch/jstarcookie/cookie.json -o cookies.json
 
-      - name: Generate Star Sports JSON
+      - name: Generate Star Sports JSON (NO JQ)
         run: |
           mkdir -p output
 
-          jq -s '
-          .[0] as $channels
-          | .[1] as $cookies
-          | [
+          node << 'EOF'
+          const fs = require("fs");
 
-            $channels[]
-            | select(.name | test("Star Sports"))
-            | .name as $name
+          const channels = JSON.parse(fs.readFileSync("channels.json", "utf8"));
+          const cookies = JSON.parse(fs.readFileSync("cookies.json", "utf8"));
 
-            | (
-              if $name == "Star Sports 1 Hindi HD" then "ss1h"
-              elif $name == "Star Sports 1 HD" then "ss1"
-              elif $name == "Star Sports 1" then "ss1sd"
-              elif $name == "Star Sports 1 Tamil HD" then "ss1tamhd"
-              elif $name == "Star Sports 1 Tamil" then "ss1tam"
-              elif $name == "Star Sports 1 Telugu HD" then "ss1telhd"
-              elif $name == "Star Sports 1 Telugu" then "ss1tel"
-              elif $name == "Star Sports 1 Kannada" then "ss1kan"
+          function mapId(name) {
+            const map = {
+              "Star Sports 1 Hindi HD": "ss1h",
+              "Star Sports 1 HD": "ss1",
+              "Star Sports 1": "ss1sd",
+              "Star Sports 1 Tamil HD": "ss1tamhd",
+              "Star Sports 1 Tamil": "ss1tam",
+              "Star Sports 1 Telugu HD": "ss1telhd",
+              "Star Sports 1 Telugu": "ss1tel",
+              "Star Sports 1 Kannada": "ss1kan",
 
-              elif $name == "Star Sports 2 Hindi HD" then "ss2h"
-              elif $name == "Star Sports 2 Hindi" then "ss2hin"
-              elif $name == "Star Sports 2 HD" then "ss2"
-              elif $name == "Star Sports 2" then "ss2sd"
+              "Star Sports 2 Hindi HD": "ss2h",
+              "Star Sports 2 Hindi": "ss2hin",
+              "Star Sports 2 HD": "ss2",
+              "Star Sports 2": "ss2sd",
 
-              elif $name == "Star Sports 2 Tamil HD" then "ss2tamhd"
-              elif $name == "Star Sports 2 Tamil" then "ss2tam"
+              "Star Sports 2 Tamil HD": "ss2tamhd",
+              "Star Sports 2 Tamil": "ss2tam",
 
-              elif $name == "Star Sports 2 Telugu HD" then "ss2telhd"
-              elif $name == "Star Sports 2 Telugu" then "ss2tel"
+              "Star Sports 2 Telugu HD": "ss2telhd",
+              "Star Sports 2 Telugu": "ss2tel",
 
-              elif $name == "Star Sports 2 Kannada" then "ss2kan"
+              "Star Sports 2 Kannada": "ss2kan",
+              "Star Sports 3": "ss3",
 
-              elif $name == "Star Sports 3" then "ss3"
+              "Star Sports Select 1 HD": "sss1h",
+              "Star Sports Select 1": "sss1",
 
-              elif $name == "Star Sports Select 1 HD" then "sss1h"
-              elif $name == "Star Sports Select 1" then "sss1"
+              "Star Sports Select 2 HD": "sss2h",
+              "Star Sports Select 2": "sss2"
+            };
+            return map[name] || null;
+          }
 
-              elif $name == "Star Sports Select 2 HD" then "sss2h"
-              elif $name == "Star Sports Select 2" then "sss2"
+          function getCookie(name) {
+            const item = cookies.failed_results?.find(x => x.channel_name === name);
+            if (!item) return null;
+            const url = item.error_details?.final_url || "";
+            return url.split("?")[1] || "";
+          }
 
-              else null
-              end
-            ) as $id
+          const result = [];
 
-            | select($id != null)
+          for (const ch of channels) {
+            if (!ch.name || !ch.name.includes("Star Sports")) continue;
 
-            | (
-              $cookies.failed_results[]
-              | select(.channel_name == $name)
-              | .error_details.final_url
-              | split("?")[1]
-            ) as $cookie
+            const id = mapId(ch.name);
+            if (!id) continue;
 
-            | {
-                id: $id,
-                name: $name,
-                url: (.url | split("?")[0]),
-                cookie: "__hdnea__=" + $cookie,
-                keyId: .keyId,
-                key: .key,
-                logo: .logo
-              }
+            const cookie = getCookie(ch.name);
+            if (!cookie) continue;
 
-          ]
-          ' channels.json cookies.json > output/star_sports.json
+            result.push({
+              id,
+              name: ch.name,
+              url: (ch.url || "").split("?")[0],
+              cookie: "__hdnea__=" + cookie,
+              keyId: ch.keyId,
+              key: ch.key,
+              logo: ch.logo
+            });
+          }
+
+          fs.writeFileSync("output/star_sports.json", JSON.stringify(result, null, 2));
+          console.log("Generated:", result.length, "channels");
+          EOF
 
       - name: Commit & push output
         run: |
