@@ -1,4 +1,4 @@
-name: Build Star Sports Final JSON
+name: Build Star Sports JSON
 
 on:
   schedule:
@@ -10,53 +10,53 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
+      - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Install jq
-        run: sudo apt-get install -y jq
+        run: sudo apt-get update && sudo apt-get install -y jq
 
-      - name: Fetch data
+      - name: Fetch source data
         run: |
           curl -s https://allinonereborn.online/jtv-fetch/jstr4web.json -o channels.json
           curl -s https://allinonereborn.online/jtv-fetch/jstarcookie/cookie.json -o cookies.json
 
-      - name: Process JSON
+      - name: Generate Star Sports JSON
         run: |
-          jq -n '
-          # Load inputs
-          (input | .failed_results) as $failed
-          | (input) as $channels
+          mkdir -p output
 
-          [
-            $failed[]
-            | select(.channel_name | test("Star Sports"))
-            | {
-                cid: .channel_id,
-                cname: .channel_name,
-                cookie: (.error_details.final_url | split("?")[1])
-              } as $c
+          jq -s '
+          .[0].failed_results as $failed
+          | .[1] as $channels
+          | [
+              $failed[]
+              | select(.channel_name | test("Star Sports"))
+              | {
+                  cid: .channel_id,
+                  cookie: (.error_details.final_url | split("?")[1])
+                } as $c
 
-            | ($channels[]
-              | select(.id == $c.cid)
-            ) as $ch
+              | ($channels[]
+                | select(.id == $c.cid)
+              ) as $ch
 
-            | {
-                id: $ch.id,
-                name: $ch.name,
-                url: ($ch.url | split("?")[0]),
-                cookie: $c.cookie,
-                keyId: $ch.keyId,
-                key: $ch.key,
-                logo: $ch.logo
-              }
-          ]
-          ' cookies.json channels.json > star_sports.json
+              | {
+                  id: $ch.id,
+                  name: $ch.name,
+                  url: ($ch.url | split("?")[0]),
+                  cookie: $c.cookie,
+                  keyId: $ch.keyId,
+                  key: $ch.key,
+                  logo: $ch.logo
+                }
+            ]
+          ' cookies.json channels.json > output/star_sports.json
 
-      - name: Commit & push
+      - name: Commit & push output
         run: |
           git config user.name "github-actions"
           git config user.email "actions@github.com"
-          git add star_sports.json
+
+          git add output/star_sports.json
           git commit -m "Update Star Sports JSON" || echo "No changes"
           git push
