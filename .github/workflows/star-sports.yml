@@ -14,19 +14,20 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Install jq
-        run: sudo apt-get update && sudo apt-get install -y jq
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y jq
 
       - name: Fetch source data
         run: |
-          curl -s https://allinonereborn.online/jtv-fetch/jstr4web.json -o channels.json
-          curl -s https://allinonereborn.online/jtv-fetch/jstarcookie/cookie.json -o cookies.json
+          mkdir -p data output
+          curl -s https://allinonereborn.online/jtv-fetch/jstr4web.json -o data/channels.json
+          curl -s https://allinonereborn.online/jtv-fetch/jstarcookie/cookie.json -o data/cookies.json
 
-           - name: Generate Star Sports JSON
+      - name: Generate Star Sports JSON
         run: |
-          mkdir -p output
-
           jq -s '
-          
+
           def map_id($name):
             if $name == "Star Sports 1 Hindi HD" then "ss1h"
             elif $name == "Star Sports 1 HD" then "ss1"
@@ -61,7 +62,7 @@ jobs:
             end;
 
           def get_cookie($name; cookies):
-            (cookies.failed_results[]
+            (cookies[0].failed_results[]
               | select(.channel_name == $name)
               | .error_details.final_url
               | split("?")[1]
@@ -83,4 +84,13 @@ jobs:
                   logo: .logo
                 }
             )
-          ' channels.json cookies.json > output/star_sports.json
+          ' data/channels.json data/cookies.json > output/star_sports.json
+
+      - name: Commit & push output
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+
+          git add output/star_sports.json
+          git commit -m "Update Star Sports JSON" || echo "No changes"
+          git push
