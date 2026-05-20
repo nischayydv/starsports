@@ -21,7 +21,7 @@
     "id": "sss2h",
     "name": "Star Sports Select 2 HD",
     "url": "https://jiotvpllive.cdn.jio.com/bpk-tv/Star_Sports_Select_HD_2_BTS/WDVLive/index.mpd",
-    "cookie": "__hdnea__=__hdnea__=st=1779214526~exp=1779236126~acl=/bpk-tv/Star_Sports_Select_HD_2_BTS/WDVLive/*~hmac=ad9de7d0d4546109238e34d4674a084b3eb40450eab094f9ddcaf916596d6b72",
+    "cookie": "__hdnea__=__hdnea__=st=1779237012~exp=1779258612~acl=/bpk-tv/Star_Sports_Select_HD_2_BTS/WDVLive/*~hmac=4b03738cfcfa45a536449840fe770d03a7c83ca3deaf777d556d249a60fef8fe",
     "keyId": "6017d0514d425fa38f6e80ba6dcc852f",
     "key": "0018944b00adf2078f62386f30c68b74",
     "logo": "https://img.media.jio.com/tvpimages/98/79/302114_1749665414817_l_medium.jpg"
@@ -39,7 +39,7 @@
     "id": "ss1",
     "name": "Star Sports 1 HD",
     "url": "https://jiotvpllive.cdn.jio.com/bpk-tv/Star_Sports_HD1_BTS/WDVLive/index.mpd",
-    "cookie": "__hdnea__=__hdnea__=st=1779229818~exp=1779251418~acl=/bpk-tv/Star_Sports_HD1_BTS/WDVLive/*~hmac=468c904aae6fe67db3cd6faf99980c07420743de55e90806ba8d95e14e73730e",
+    "cookie": "__hdnea__=__hdnea__=st=1779252320~exp=1779273920~acl=/bpk-tv/Star_Sports_HD1_BTS/WDVLive/*~hmac=46bf813d398bc3fbb6e0778cba8e185713dff8f073dcad7bb58cb79db8780d07",
     "keyId": "965dc2ddb1d85138ad787999a7f30ca5",
     "key": "859695076e67fe961836b564db6d689c",
     "logo": "https://img.media.jio.com/tvpimages/76/32/301981_1749665664018_l_medium.jpg"
@@ -93,7 +93,7 @@
     "id": "ss2hin",
     "name": "Star Sports 2 Hindi",
     "url": "https://jiotvpllive.cdn.jio.com/bpk-tv/StarSports2Hin_BTS/WDVLive/index.mpd",
-    "cookie": "__hdnea__=__hdnea__=st=1779214558~exp=1779236158~acl=/bpk-tv/StarSports2Hin_BTS/WDVLive/*~hmac=9945a7c327d27054aefc8d6744f620c3a11408152900f3bcc9c316c2e3377604",
+    "cookie": "__hdnea__=__hdnea__=st=1779237036~exp=1779258636~acl=/bpk-tv/StarSports2Hin_BTS/WDVLive/*~hmac=fa76650799d7e5fd7fcca0d1bc237f6b4dfc6c55093ecafef3094c5be36bd5e8",
     "keyId": "a3ed8dc0e0cb5d238da80ee0a85bd2e1",
     "key": "67a96992e6406606f3480ab58d7f540c",
     "logo": "https://img.media.jio.com/tvpimages/57/17/302124_1749130246443_l_medium.jpg"
@@ -102,7 +102,7 @@
     "id": "ss3",
     "name": "Star Sports 3",
     "url": "https://jiotvpllive.cdn.jio.com/bpk-tv/Star_Sports_3_BTS/WDVLive/index.mpd",
-    "cookie": "__hdnea__=__hdnea__=st=1779216326~exp=1779237926~acl=/bpk-tv/Star_Sports_3_BTS/WDVLive/*~hmac=aca3d6039de6c7232fb259aea9a42fa1e2ae9efa98d7fac1f60a2b780191d026",
+    "cookie": "__hdnea__=__hdnea__=st=1779238824~exp=1779260424~acl=/bpk-tv/Star_Sports_3_BTS/WDVLive/*~hmac=6fe3f174bb7c832acce2baaed7b514307aea47fe16d28bd9b8c8c5f883f1bcec",
     "keyId": "e4e8647eaf0659ac85f61765a5abcdc1",
     "key": "d749c9b27505beb0e1a8b6c30ca65de6",
     "logo": "https://img.media.jio.com/tvpimages/78/2/302117_1749666092192_l_medium.jpg"
@@ -129,7 +129,7 @@
     "id": "ss1telhd",
     "name": "Star Sports 1 Telugu HD",
     "url": "https://jiotvpllive.cdn.jio.com/bpk-tv/Star_Sports_1_Telugu_HD_BTS/WDVLive/index.mpd",
-    "cookie": "__hdnea__=__hdnea__=st=1779216377~exp=1779237977~acl=/bpk-tv/Star_Sports_1_Telugu_HD_BTS/WDVLive/*~hmac=1355355520532fde51319b7bbbefaf271a9ecd168de5a8f0cd6b82058875617f",
+    "cookie": "__hdnea__=__hdnea__=st=1779238866~exp=1779260466~acl=/bpk-tv/Star_Sports_1_Telugu_HD_BTS/WDVLive/*~hmac=68eb765f5fef5ef986368e49e75bb5e29d267d2ebb0be422d578505409ceb061",
     "keyId": "49e84b9edfd85379b90c81b7d2d3d2bf",
     "key": "19c82d3ff094fa06af95820a1572ecb5",
     "logo": "https://img.media.jio.com/tvpimages/19/57/302123_1749663029798_l_medium.jpg"
@@ -138,7 +138,7 @@
     "id": "ss1tel",
     "name": "Star Sports 1 Telugu",
     "url": "https://jiotvpllive.cdn.jio.com/bpk-tv/Star_Sports_1_Telugu_BTS/WDVLive/index.mpd",
-    "cookie": "__hdnea__=__hdnea__=st=1779216344~exp=1779237944~acl=/bpk-tv/Star_Sports_1_Telugu_BTS/WDVLive/*~hmac=cc4ad902a345768b021f9f3d68366a9e054178480d6b0ed7d64c6acc6c074db0",
+    "cookie": "__hdnea__=__hdnea__=st=1779238843~exp=1779260443~acl=/bpk-tv/Star_Sports_1_Telugu_BTS/WDVLive/*~hmac=88697c7e0e90f3bd29aa0542cc8b7ce87da2060c11cda486b19073fef378d264",
     "keyId": "200a6dd89c6b5a48b9991d8ab57fc7d2",
     "key": "1f62834669a97e92ea1f3263274853fc",
     "logo": "https://img.media.jio.com/tvpimages/26/67/302119_1749662981095_l_medium.jpg"
@@ -147,7 +147,7 @@
     "id": "ss1kan",
     "name": "Star Sports 1 Kannada",
     "url": "https://jiotvpllive.cdn.jio.com/bpk-tv/Star_Sports_1_Kannada_BTS/WDVLive/index.mpd",
-    "cookie": "__hdnea__=__hdnea__=st=1779216338~exp=1779237938~acl=/bpk-tv/Star_Sports_1_Kannada_BTS/WDVLive/*~hmac=2a5d8bc49f5d2d04cb971157a850db9a5d338cc56dbe3edb5fc621c24a052bf2",
+    "cookie": "__hdnea__=__hdnea__=st=1779238835~exp=1779260435~acl=/bpk-tv/Star_Sports_1_Kannada_BTS/WDVLive/*~hmac=6827e3436a7c44837ef111e2c65fcb422f7df8825babd930696a6b5a2cc5e9c7",
     "keyId": "9a6d058fa40b5460a946178900eb44cb",
     "key": "791d7444110cec32d731ca0c33ac6c15",
     "logo": "https://img.media.jio.com/tvpimages/13/91/302118_1749663894692_l_medium.jpg"
@@ -174,7 +174,7 @@
     "id": "ss2tam",
     "name": "Star Sports 2 Tamil",
     "url": "https://jiotvpllive.cdn.jio.com/bpk-tv/StarSports2Tamil_BTS/WDVLive/index.mpd",
-    "cookie": "__hdnea__=__hdnea__=st=1779216358~exp=1779237958~acl=/bpk-tv/StarSports2Tamil_BTS/WDVLive/*~hmac=db8fb9911da4ae9df235347cae5769278d0689f2501eac26115a718652ac0c67",
+    "cookie": "__hdnea__=__hdnea__=st=1779238852~exp=1779260452~acl=/bpk-tv/StarSports2Tamil_BTS/WDVLive/*~hmac=3b6884cd370bfae5d27188049750d5c31dea131f03538da3b321bd9f56aaf690",
     "keyId": "3c1b335c4bb858a7a6ac5a883d898a09",
     "key": "6eeff4302a7d19befd43c6b7b5fac268",
     "logo": "https://img.media.jio.com/tvpimages/74/92/301561_1749664725619_l_medium.jpg"
@@ -183,7 +183,7 @@
     "id": "ss2telhd",
     "name": "Star Sports 2 Telugu HD",
     "url": "https://jiotvpllive.cdn.jio.com/bpk-tv/Star_Sports2_Telugu_HD_BTS/WDVLive/index.mpd",
-    "cookie": "__hdnea__=__hdnea__=st=1779216365~exp=1779237965~acl=/bpk-tv/Star_Sports2_Telugu_HD_BTS/WDVLive/*~hmac=57d6945d47f83e3f0802c72a6d933ad7a4550fa32cb9880783113736ba9b155a",
+    "cookie": "__hdnea__=__hdnea__=st=1779238857~exp=1779260457~acl=/bpk-tv/Star_Sports2_Telugu_HD_BTS/WDVLive/*~hmac=9de7f422833aa47632200de8dbf1b2ddad51c22729edf4bb08d813cb954551fe",
     "keyId": "c8a2fb190fc957c1b8333af9a7a39d31",
     "key": "be7497b59d4ce9e33d29bfd1d38bad1d",
     "logo": "https://img.media.jio.com/tvpimages/84/67/302121_1749664974599_l_medium.jpg"
@@ -192,7 +192,7 @@
     "id": "ss2tel",
     "name": "Star Sports 2 Telugu",
     "url": "https://jiotvpllive.cdn.jio.com/bpk-tv/StarSports2Telugu_BTS/WDVLive/index.mpd",
-    "cookie": "__hdnea__=__hdnea__=st=1779216352~exp=1779237952~acl=/bpk-tv/StarSports2Telugu_BTS/WDVLive/*~hmac=1a6a92e4548fa8d13f19c9f4a88f47b6e98c650b8efd0fa51a1440579353fdb4",
+    "cookie": "__hdnea__=__hdnea__=st=1779238848~exp=1779260448~acl=/bpk-tv/StarSports2Telugu_BTS/WDVLive/*~hmac=6c5e634a3bce29cbc750f573c440e3d0791132416cdbcde5eb29f7f1546cffda",
     "keyId": "6576a2664bc1563db2abd4fc192152b2",
     "key": "452e28454297a4193dbdf8f5cebc70b0",
     "logo": "https://img.media.jio.com/tvpimages/41/94/301562_1749665043898_l_medium.jpg"
